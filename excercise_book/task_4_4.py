@@ -1,6 +1,7 @@
 # Write a program that creates
-# a two-dimensional array, places 1
-# on the diagonal, and places 0
+# a two-dimensional array, places
+# numbers from 0 to 9
+# on the diagonal and places 0
 # out of the diagonal.
 # It must also calculate the sum
 # of elements on the diagonal.
@@ -11,7 +12,7 @@ array = [[0 for i in range(columns)] for j in range(rows)]
 
 
 for i in range(rows):
-    array[i][i] = 1
+    array[i][i] = i
 
 for i in range(rows):
     print(array[i])
