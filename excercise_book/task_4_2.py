@@ -7,4 +7,4 @@ for i in range(9, -1, -1):
     array.append(i)
 
 for number in array:
-    print(number)
+    print("array[" + str(i) + "] = " + str(i))
