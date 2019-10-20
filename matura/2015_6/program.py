@@ -20,7 +20,7 @@ class Wyscig:
         self.miejsce = miejsce
 
     def __str__(self):
-        return "Wyscig id: " + self.id + ", rok: " + self.rok + ", miejsce:" + self.miejsce
+        return "Wyscig id: " + self.id + ", rok: " + self.rok + ", miejsce: " + self.miejsce
 
 
 class Wynik:
@@ -53,8 +53,8 @@ with open("Wyscigi.txt") as f:
     line = f.readline()
 
     while line:
-        w = line.split(";")
-        wyscig = Wyscig(w[0], w[1], w[2])
+        wynik = line.split(";")
+        wyscig = Wyscig(wynik[0], wynik[1], wynik[2])
         wyscigi.append(wyscig)
 
         line = f.readline()
@@ -64,45 +64,34 @@ with open("Wyniki.txt") as f:
     line = f.readline()
 
     while line:
-        w = line.split(";")  # rozdzielanie danych pojedyńczego kierowcy
-        punkty = float(w[1].replace(",", "."))
-        wynik = Wynik(w[0], punkty, w[2])
+        line = line.strip()  # Pozbycie się znaków nowych linii  \n
+
+        wynik = line.split(";")  # rozdzielanie danych pojedyńczego kierowcy
+        punkty = float(wynik[1].replace(",", "."))
+        wynik = Wynik(wynik[0], punkty, wynik[2])
         wyniki.append(wynik)
 
         line = f.readline()
 
-print(kierowcy[1])
-print(wyscigi[1])
-print(wyniki[1])
+print("Dane załadowane pomyślnie")
 
+id_roberta = list(filter(lambda k: k.nazwisko == "Kubica", kierowcy))[0].id
 
-''' Dane Gotowe '''
-
-id_roberta = None
+print("id_roberta: " + id_roberta)
 wyniki_roberta = list()
 max_punkty = 0
 id_najlepszego_wyscigu = None
 najlepszy_wyscig = None
 
-for k in kierowcy:
-    if k.nazwisko == "Kubica":
-        id_roberta = k.id
+for wynik in wyniki:
+    if wynik.id_kierowcy == id_roberta:
+        if wynik.punkty > max_punkty:
+            max_punkty = wynik.punkty
+            id_najlepszego_wyscigu = wynik.id_wyscigu
 
-for w in wyniki:
-    if w.id_kierowcy == id_roberta:
-        if w.punkty > max_punkty:
-            max_punkty = w.punkty
-            id_najlepszego_wyscigu = w.id_wyscigu
+print("id_najlepszego_wyscigu: " + id_najlepszego_wyscigu)
 
-print("best_wyscig_roberta: " + id_najlepszego_wyscigu)
+najlepszy_wyscig = list(
+    filter(lambda wyscig: wyscig.id == id_najlepszego_wyscigu, wyscigi))[0]
 
-kubica = list(filter(lambda x: (x.id == id_roberta), kierowcy))
-for k in kubica:
-    print(str(k))
-
-for wyscig in wyscigi:
-    if wyscig.id == id_najlepszego_wyscigu:
-        najlepszy_wyscig = wyscig
-        print("jest")
-
-print(str(najlepszy_wyscig))
+print("Najlepszy wyścig Roberta: " + str(najlepszy_wyscig))
