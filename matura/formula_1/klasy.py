@@ -16,7 +16,7 @@ class Wyscig:
         self.miejsce = miejsce
 
     def __str__(self):
-        return "Wyscig id: " + self.id + ", rok: " + self.rok + ", miejsce: " + self.miejsce
+        return "Wyscig id: " + self.id + ", rok: " + str(self.rok) + ", miejsce: " + self.miejsce
 
 
 class Wynik:
