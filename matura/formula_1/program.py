@@ -98,19 +98,17 @@ print(najmniej_popularne_miejsca)
 f.write("Najmniejszą liczbę wyścigów Grand Prix w latach 2000-2012 rozegrano w " +
         str(list(najmniej_popularne_miejsca)) + "\n")
 
+# zadanie 6.3
 kierowcy_i_punkty = {}
 
 
-def wez_imie_nazwisko(id_kierowcy):
+def wez_kierowce(id_kierowcy):
     for kierowca in kierowcy:
         if id_kierowcy == kierowca.id:
-            return kierowca.imie + " " + kierowca.nazwisko
+            return kierowca
 
 
 def zrob_klasyfikacje(rok):
-    print("- - - - - - - - - - - - - - - - - - - - - ")
-    print("Wyświetlanie klasyfikacji roku " + str(rok))
-
     wyscigi_w_roku = []
     for wyscig in wyscigi:
         if wyscig.rok == rok:
@@ -134,22 +132,57 @@ def zrob_klasyfikacje(rok):
 
     # zamiana id_kierowcy na imię i nazwisko
     for id_kierowcy, punkty in set(klasyfikacja.items()):
-        imie_nazwisko = wez_imie_nazwisko(id_kierowcy)
+        kierowca = wez_kierowce(id_kierowcy)
+        imie_nazwisko = kierowca.imie + " " + kierowca.nazwisko
         klasyfikacja[imie_nazwisko] = klasyfikacja.pop(id_kierowcy)
 
     klasyfikacja_list_sort = sorted(
         klasyfikacja, key=klasyfikacja.get, reverse=True)
 
-    for key in klasyfikacja_list_sort:
-        print(key, klasyfikacja[key])
+    # for key in klasyfikacja_list_sort:
+    #    print(key, klasyfikacja[key])
 
     lider = klasyfikacja_list_sort[0]  # pierwszy ma najwięcej punktów
     punkty_lidera = klasyfikacja[lider]
 
-    f.write("Sezon: " + str(rok) + " Lider: " +
-            lider + "Suma punktów: " + str(punkty_lidera) + "\n")
+    f.write("Sezon: " + str(rok) + ", Lider: " +
+            lider + ", Suma punktów: " + str(punkty_lidera) + "\n")
 
 
 zrob_klasyfikacje(2000)
 zrob_klasyfikacje(2006)
 zrob_klasyfikacje(2012)
+
+# zadanie 6.4
+
+kierowcy_w_2012 = []
+
+for wyscig in wyscigi:
+    if wyscig.rok == 2012:
+        for wynik in wyniki:
+            if wynik.id_wyscigu == wyscig.id:
+                kierowca = wez_kierowce(wynik.id_kierowcy)
+                kierowcy_w_2012.append(kierowca)
+
+kierowcy_w_2012 = list(dict.fromkeys(kierowcy_w_2012))
+
+kraje = {}  # kraj: liczba
+
+for kierowca in kierowcy_w_2012:
+    kraje[kierowca.kraj] = 0
+
+
+for a in kierowcy_w_2012:
+    print(a)
+
+for kraj, liczba in kraje.items():
+    for kierowca in kierowcy_w_2012:
+        if kierowca.kraj == kraj:
+            kraje[kraj] += 1
+
+f.write("Zestawienie liczby zawodników reprezentujących swój kraj w 2012 roku\n")
+for kraj, liczba in kraje.items():
+    print(kraj, liczba)
+    f.write(kraj + ": " + str(liczba) + "\n")
+
+f.close()
