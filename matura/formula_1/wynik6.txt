@@ -1,0 +1,5 @@
+Najlepszy wyścig Roberta: Wyscig id: w176, rok: 2010, miejsce: Australia
+Najmniejszą liczbę wyścigów Grand Prix w latach 2000-2012 rozegrano w ['Indie']
+Sezon: 2000 Lider: Michael SchumacherSuma punktów: 108.0
+Sezon: 2006 Lider: Fernando AlonsoSuma punktów: 134.0
+Sezon: 2012 Lider: Sebastian VettelSuma punktów: 281.0

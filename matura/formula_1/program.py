@@ -10,18 +10,22 @@ kierowcy = []
 wyscigi = []
 wyniki = []
 
-with open("Kierowcy.txt") as f:
+plik_z_wynikami = "wynik6.txt"
+
+with open("dane/Kierowcy.txt") as f:
     f.readline()  # pozbycie się nagłówków
     line = f.readline()
 
     while line:
+        line = line.strip()
+
         k = line.split(";")  # rozdzielanie danych pojedyńczego kierowcy
         kierowca = Kierowca(k[0], k[1], k[2], k[3])
         kierowcy.append(kierowca)
 
         line = f.readline()
 
-with open("Wyscigi.txt") as f:
+with open("dane/Wyscigi.txt") as f:
     f.readline()
     line = f.readline()
 
@@ -34,7 +38,7 @@ with open("Wyscigi.txt") as f:
 
         line = f.readline()
 
-with open("Wyniki.txt") as f:
+with open("dane/Wyniki.txt") as f:
     f.readline()  # pozbycie się nagłówków
     line = f.readline()
 
@@ -66,15 +70,16 @@ for wynik in wyniki:
 najlepszy_wyscig = list(
     filter(lambda wyscig: wyscig.id == id_najlepszego_wyscigu, wyscigi))[0]
 
-
+f = open(plik_z_wynikami, "w+")
 print("Najlepszy wyścig Roberta: " + str(najlepszy_wyscig))
+f.write("Najlepszy wyścig Roberta: " + str(najlepszy_wyscig) + "\n")
 
 # zadanie 6.2
 wyscigi_nowe = []
 kraje = {}
 
 for wyscig in wyscigi:
-    if wyscig.rok >= 2002 and wyscig.rok <= 2012:
+    if wyscig.rok >= 2000 and wyscig.rok <= 2012:
         wyscigi_nowe.append(wyscig)
 
         kraj = wyscig.miejsce
@@ -90,3 +95,61 @@ najmniej_popularne_miejsca = {key: value for (
 
 
 print(najmniej_popularne_miejsca)
+f.write("Najmniejszą liczbę wyścigów Grand Prix w latach 2000-2012 rozegrano w " +
+        str(list(najmniej_popularne_miejsca)) + "\n")
+
+kierowcy_i_punkty = {}
+
+
+def wez_imie_nazwisko(id_kierowcy):
+    for kierowca in kierowcy:
+        if id_kierowcy == kierowca.id:
+            return kierowca.imie + " " + kierowca.nazwisko
+
+
+def zrob_klasyfikacje(rok):
+    print("- - - - - - - - - - - - - - - - - - - - - ")
+    print("Wyświetlanie klasyfikacji roku " + str(rok))
+
+    wyscigi_w_roku = []
+    for wyscig in wyscigi:
+        if wyscig.rok == rok:
+            wyscigi_w_roku.append(wyscig)
+
+    # for w in wyscigi_w_roku:
+    #    print(w)
+
+    wyniki_w_roku = []
+    for wynik in wyniki:
+        for wyscig in wyscigi_w_roku:
+            if wynik.id_wyscigu == wyscig.id:
+                wyniki_w_roku.append(wynik)
+
+    klasyfikacja = {}  # id_kierowcy : punkty
+    for wynik in wyniki_w_roku:
+        if wynik.id_kierowcy not in klasyfikacja:
+            klasyfikacja[wynik.id_kierowcy] = wynik.punkty
+        else:
+            klasyfikacja[wynik.id_kierowcy] += wynik.punkty
+
+    # zamiana id_kierowcy na imię i nazwisko
+    for id_kierowcy, punkty in set(klasyfikacja.items()):
+        imie_nazwisko = wez_imie_nazwisko(id_kierowcy)
+        klasyfikacja[imie_nazwisko] = klasyfikacja.pop(id_kierowcy)
+
+    klasyfikacja_list_sort = sorted(
+        klasyfikacja, key=klasyfikacja.get, reverse=True)
+
+    for key in klasyfikacja_list_sort:
+        print(key, klasyfikacja[key])
+
+    lider = klasyfikacja_list_sort[0]  # pierwszy ma najwięcej punktów
+    punkty_lidera = klasyfikacja[lider]
+
+    f.write("Sezon: " + str(rok) + " Lider: " +
+            lider + "Suma punktów: " + str(punkty_lidera) + "\n")
+
+
+zrob_klasyfikacje(2000)
+zrob_klasyfikacje(2006)
+zrob_klasyfikacje(2012)
