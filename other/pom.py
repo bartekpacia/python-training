@@ -7,15 +7,22 @@ for i in range(0, t):
 
 print(wszystkie_liczby)
 
-# narazie implementuję to tylko dla k = 1
-
 for i in range(0, len(wszystkie_liczby)):
     A = wszystkie_liczby[i][0]
-    B = wszystkie_liczby[i][1]
+    B = int(wszystkie_liczby[i][1])
     k = int(wszystkie_liczby[i][2])
     print(f"A: {A}, B: {B}, k: {k}")
 
-    for j in range(1, len(A) + 1):
-        for k in range(0, 10):
-            nowe_A = str(str(k) + A[j:])
-            print(nowe_A)
+    najwieksze_dobre_C = 0
+    for j in range(0, len(A)):
+        for l in range(0, 10):
+            C_list = list(A)
+            zmieniona_cyfra = str(l)
+            C_list[j] = zmieniona_cyfra
+            kandydat_C = "".join(C_list)
+
+            if int(kandydat_C) < B:
+                if int(kandydat_C) > int(najwieksze_dobre_C):
+                    najwieksze_dobre_C = kandydat_C
+
+    print(najwieksze_dobre_C + " - najwieksze dobre")
