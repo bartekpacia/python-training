@@ -20,24 +20,22 @@ def binary_search(list, item):
             return None
 
 
-print("Enter numbers. Press Enter to sort them.")
+if __name__ == "__main__":
+    print("Enter numbers. Press Enter to sort them.")
 
-numbers = []
+    numbers = []
 
-while True:
-    number = input("Enter number: ")
+    while True:
+        number = input("Enter number: ")
 
-    if len(str(number)) == 0:
-        break
-    else:
-        numbers.append(int(number))
+        if len(str(number)) == 0:
+            break
+        else:
+            numbers.append(int(number))
 
+    numbers.sort()
 
-numbers.sort()
+    looking_for = int(input("What number are you looking for? "))
 
-for i in range(len(numbers)):
-    print(f"{i} : {numbers[i]}")
-
-looking_for = int(input("What number are you looking for? "))
-
-print(f'Number {looking_for} is at index {binary_search(numbers, looking_for)}')
+    print(
+        f'Number {looking_for} is at index {binary_search(numbers, looking_for)}')
