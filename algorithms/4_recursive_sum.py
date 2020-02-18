@@ -16,5 +16,5 @@ def sum(arr: list):
 if __name__ == "__main__":
     print("hi")
 
-    arr = [1, 2, 3, 4, 5, 6]
+    arr = [1, 2, 3, 4, 5]
     print(sum(arr))
