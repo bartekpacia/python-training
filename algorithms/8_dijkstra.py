@@ -35,18 +35,18 @@ def find_lowest_cost_node(costs):
         if cost < lowest_cost and node not in processed:
             lowest_cost = cost
             lowest_cost_node = node
-    return lowest_cost_node
+    return lowest_cost_node, lowest_cost
 
 
-node = find_lowest_cost_node(costs)
+node, cost = find_lowest_cost_node(costs)
 while node is not None:
-    print(f"lowest cost node: {node}")
-    cost = costs[node]
+    print(f"lowest cost node: {node}, cost: {cost}")
     neighbors = graph[node]
     for n in neighbors.keys():
+        print(f"checking neighbor {n}")
         new_cost = cost + neighbors[n]
         if costs[n] > new_cost:
             costs[n] = new_cost
             parents[n] = node
     processed.append(node)
-    node = find_lowest_cost_node(costs)
+    node, cost = find_lowest_cost_node(costs)
