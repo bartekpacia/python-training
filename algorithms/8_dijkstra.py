@@ -24,6 +24,7 @@ parents["meta"] = None
 
 processed = []
 
+
 # Beginning of the actual implementation
 
 
@@ -48,5 +49,6 @@ while node is not None:
         if costs[n] > new_cost:
             costs[n] = new_cost
             parents[n] = node
+
     processed.append(node)
     node, cost = find_lowest_cost_node(costs)
