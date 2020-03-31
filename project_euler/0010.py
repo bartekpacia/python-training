@@ -12,15 +12,10 @@ def is_prime(num):
     return True
 
 
-found_primes = 0
-i = 1
-while True:
+sum = 0
+for i in range(2_000_001):
     if is_prime(i):
-        found_primes += 1
-        # print(i)
-
-    if found_primes == 10001:
         print(i)
-        break
+        sum += i
 
-    i += 1
+print(sum)
