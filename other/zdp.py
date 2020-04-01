@@ -7,11 +7,10 @@ graph = {}
 def find_lowest_cost_node(costs, processed):
     lowest_cost_node = None
     lowest_cost = float("inf")
-    for node in costs:
-        cost = costs[node]
+    for node, cost in costs.items():
         if cost < lowest_cost and node not in processed:
-            lowest_cost = cost
             lowest_cost_node = node
+            lowest_cost = cost
 
     return lowest_cost_node, lowest_cost
 
@@ -26,12 +25,12 @@ def shortest_path(start, meta):
         costs[n] = graph[start][n]
 
     node, cost = find_lowest_cost_node(costs, processed)
-    while node:
+    while node is not None:
         neighbors = graph[node]
-        for n in neighbors.keys():
-            new_cost = neighbors[n] + cost
-            if costs.get(n) is None or new_cost < costs[n]:
-                costs[n] = new_cost
+        for neighbor, neighbor_cost in neighbors.items():
+            new_cost = neighbor_cost + cost
+            if costs.get(neighbor) is None or new_cost < costs[neighbor]:
+                costs[neighbor] = new_cost
 
         processed.append(node)
         node, cost = find_lowest_cost_node(costs, processed)
