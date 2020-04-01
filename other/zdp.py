@@ -15,7 +15,7 @@ def find_lowest_cost_node(costs, processed):
     return lowest_cost_node, lowest_cost
 
 
-def shortest_path(start, meta):
+def shortest_path(start, end):
     costs = {}
     costs[start] = 0
     processed = []
@@ -35,10 +35,10 @@ def shortest_path(start, meta):
         processed.append(node)
         node, cost = find_lowest_cost_node(costs, processed)
 
-    if costs.get(meta) is None:
+    if costs.get(end) is None:
         return -1
     else:
-        return costs[meta]
+        return costs[end]
 
 
 for i in range(m):
