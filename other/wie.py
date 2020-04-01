@@ -1,6 +1,6 @@
 from typing import List, Dict, Tuple, Optional
 
-file = open("wie_test_2.txt")
+file = open("wie_test_1.txt")
 line = file.readline().strip().split(" ")
 n = int(line[0])  # nodes
 m = int(line[1])  # edges
@@ -28,8 +28,10 @@ def shortest_path(start: int, end: int) -> Tuple[int, Dict[int, int]]:
     parents: Dict[int, int] = {}
 
     # first traversal to find initial costs
-    for n in graph[start].keys():
-        costs[n] = graph[start][n]
+    for node in graph[start].keys():
+        costs[node] = graph[start][node]
+        parents[node] = start
+        print(f"{node}'s parent set to {start}'")
 
     node, cost = find_lowest_cost_node(costs, processed)
     while node is not None:
@@ -40,6 +42,8 @@ def shortest_path(start: int, end: int) -> Tuple[int, Dict[int, int]]:
             new_cost = neighbor_cost + cost
             if costs.get(neighbor) is None or new_cost < costs[neighbor]:
                 costs[neighbor] = new_cost
+                parents[neighbor] = node
+                print(f"{neighbor}'s parent set to {node}'")
 
         processed.append(node)
         node, cost = find_lowest_cost_node(costs, processed)
@@ -67,6 +71,5 @@ for i in range(m):
     if graph.get(b) is None:
         graph[b] = {}
 
-print(graph)
-
-print(f"shortest path: {shortest_path(1, n)}")
+length, parents = shortest_path(1, n)
+print(f"length: {length}, parents: {str(parents)}")
