@@ -1,17 +1,16 @@
-line = input().split(" ")
+file = open("wie_test_2.txt")
+line = file.readline().strip().split(" ")
+print(f"line: {line}")
 n = int(line[0])  # nodes
 m = int(line[1])  # edges
 graph = {}
-
-# start = 1
-# meta = n
 
 
 def find_lowest_cost_node(costs, processed):
     lowest_cost_node = None
     lowest_cost = float("inf")
     for node, cost in costs.items():
-        if cost < lowest_cost and note not in processed:
+        if cost < lowest_cost and node not in processed:
             lowest_cost_node = node
             lowest_cost = cost
 
@@ -24,28 +23,31 @@ def shortest_path(start, end):
     processed = []
 
     # first traversal to find initial costs
-    for n in graph.keys():
+    print(f"graph[start]: {str(graph[start])}")
+    for n in graph[start].keys():
         costs[n] = graph[start][n]
 
     node, cost = find_lowest_cost_node(costs, processed)
     while node is not None:
+        print(f"lowest cost node: {node}, cost: {cost}")
         neighbors = graph[node]
         for neighbor, neighbor_cost in neighbors.items():
+            print(f"checking neighbor {neighbor}")
             new_cost = neighbor_cost + cost
-            if costs.get(neighbor) is not None and new_cost < costs[neighbor]:
+            if costs.get(neighbor) is None or new_cost < costs[neighbor]:
                 costs[neighbor] = new_cost
 
         processed.append(node)
         node, cost = find_lowest_cost_node(costs, processed)
 
-    if costs.get(meta) is None:
+    if costs.get(end) is None:
         return -1
     else:
-        return costs[meta]
+        return costs[end]
 
 
 for i in range(m):
-    line = input().split(" ")
+    line = file.readline().strip().split(" ")
     a = int(line[0])
     b = int(line[1])
     c = int(line[2])
@@ -63,5 +65,4 @@ for i in range(m):
 
 print(graph)
 
-for p in shortest_path(1, n):
-    print(p)
+print(f"shortest path: {shortest_path(1, n)}")
