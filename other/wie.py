@@ -1,14 +1,18 @@
+from typing import List, Dict, Tuple, Optional
+
 file = open("wie_test_2.txt")
 line = file.readline().strip().split(" ")
-print(f"line: {line}")
 n = int(line[0])  # nodes
 m = int(line[1])  # edges
-graph = {}
+graph: Dict[int, Dict[int, int]] = {}
 
 
-def find_lowest_cost_node(costs, processed):
-    lowest_cost_node = None
-    lowest_cost = float("inf")
+def find_lowest_cost_node(
+    costs: Dict[int, int], processed: List[int]
+) -> Tuple[Optional[int], int]:
+
+    lowest_cost_node: Optional[int] = None
+    lowest_cost = 1001  # z treści zadania
     for node, cost in costs.items():
         if cost < lowest_cost and node not in processed:
             lowest_cost_node = node
@@ -17,22 +21,22 @@ def find_lowest_cost_node(costs, processed):
     return lowest_cost_node, lowest_cost
 
 
-def shortest_path(start, end):
-    costs = {}
+def shortest_path(start: int, end: int) -> Tuple[int, Dict[int, int]]:
+    costs: Dict[int, int] = {}
     costs[start] = 0
-    processed = []
+    processed: List[int] = []
+    parents: Dict[int, int] = {}
 
     # first traversal to find initial costs
-    print(f"graph[start]: {str(graph[start])}")
     for n in graph[start].keys():
         costs[n] = graph[start][n]
 
     node, cost = find_lowest_cost_node(costs, processed)
     while node is not None:
-        print(f"lowest cost node: {node}, cost: {cost}")
+        # print(f"lowest cost node: {node}, cost: {cost}")
         neighbors = graph[node]
         for neighbor, neighbor_cost in neighbors.items():
-            print(f"checking neighbor {neighbor}")
+            # print(f"checking neighbor {neighbor}")
             new_cost = neighbor_cost + cost
             if costs.get(neighbor) is None or new_cost < costs[neighbor]:
                 costs[neighbor] = new_cost
@@ -41,9 +45,9 @@ def shortest_path(start, end):
         node, cost = find_lowest_cost_node(costs, processed)
 
     if costs.get(end) is None:
-        return -1
+        return -1, {}
     else:
-        return costs[end]
+        return costs[end], parents
 
 
 for i in range(m):
