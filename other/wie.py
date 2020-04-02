@@ -1,4 +1,5 @@
 from typing import List, Dict, Tuple, Optional
+from collections import deque
 
 file = open("wie_test_1.txt")
 line = file.readline().strip().split(" ")
@@ -28,10 +29,10 @@ def shortest_path(start: int, end: int) -> Tuple[int, Dict[int, int]]:
     parents: Dict[int, int] = {}
 
     # first traversal to find initial costs
-    for node in graph[start].keys():
-        costs[node] = graph[start][node]
-        parents[node] = start
-        print(f"{node}'s parent set to {start}'")
+    # for node in graph[start].keys():
+    #     costs[node] = graph[start][node]
+    #     parents[node] = start
+    #     print(f"{node}'s parent set to {start}'")
 
     node, cost = find_lowest_cost_node(costs, processed)
     while node is not None:
@@ -43,7 +44,7 @@ def shortest_path(start: int, end: int) -> Tuple[int, Dict[int, int]]:
             if costs.get(neighbor) is None or new_cost < costs[neighbor]:
                 costs[neighbor] = new_cost
                 parents[neighbor] = node
-                print(f"{neighbor}'s parent set to {node}'")
+                # print(f"{neighbor}'s parent set to {node}'")
 
         processed.append(node)
         node, cost = find_lowest_cost_node(costs, processed)
@@ -72,4 +73,12 @@ for i in range(m):
         graph[b] = {}
 
 length, parents = shortest_path(1, n)
+parent = parents[n]
+path = deque()
 print(f"length: {length}, parents: {str(parents)}")
+while parent is not None:
+    path.appendleft(parent)
+    parent = parents.get(parent)
+
+for p in path:
+    print(p)
