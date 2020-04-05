@@ -1,11 +1,13 @@
 n = int(input())
 
 banknotes = 0
-n = n
+
+hundreds, rest = divmod(n, 100)
+n = rest
+banknotes += hundreds
+
 while n > 0:
-    if n >= 100:
-        n -= 100
-    elif n >= 20:
+    if n >= 20:
         n -= 20
     elif n >= 10:
         n -= 10
