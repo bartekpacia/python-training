@@ -20,10 +20,6 @@ def shortest_path(start, end):
     costs[start] = 0
     processed = []
 
-    # first traversal
-    for n in graph[start].keys():
-        costs[n] = graph[start][n]
-
     node, cost = find_lowest_cost_node(costs, processed)
     while node is not None:
         neighbors = graph[node]
