@@ -58,8 +58,8 @@ pary_map = []
 pary_indeksy_map = []
 for index1, mapa1 in enumerate(mapy):
     for index2, mapa2 in enumerate(mapy):
-        if analizuj_mape_obrot(mapa1, mapa2) and sorted((index1, index2)) not in pary_map:
-            pary_map.append(sorted((mapa1, mapa2)))
+        if analizuj_mape_obrot(mapa1, mapa2) and (index1, index2) not in pary_map:
+            pary_map.append((mapa1, mapa2))
             takie_same_180 += 1
 
 print(f"wszystkie mapy: {len(mapy)}")
