@@ -30,6 +30,7 @@ class Solution:
             if smallest != "ź":
                 result += smallest
                 self.iters += 1
+                print(f"appending {smallest}")
 
             for char in s:
                 if self.iters < len(s):
@@ -39,6 +40,7 @@ class Solution:
                         break
                     result += smallest
                     self.iters += 1
+                    print(f"appending {smallest}")
 
             largest = "/"
             for char in s:
@@ -49,6 +51,7 @@ class Solution:
             if largest != "/":
                 result += largest
                 self.iters += 1
+                print(f"appending {largest}")
 
             for char in s:
                 if self.iters < len(s):
@@ -57,11 +60,22 @@ class Solution:
                         break
                     result += largest
                     self.iters += 1
+                    print(f"appending {largest}")
 
-        print(
-            f"len(s): {len(s)}, len(result): {len(result)}, iters: {self.iters}")
-        return result
+        return result, self.iters
 
 
-solution = Solution()
-print(solution.sortString("aaaabbbbcccc"))
+t1 = Solution().sortString("aaaabbbbcccc")
+print(f"aaaabbbbcccc -> {t1[0]}, l: {t1[1]}")
+
+t2 = Solution().sortString("art")
+print(f"rat -> {t2[0]}, l: {t2[1]}")
+
+t3 = Solution().sortString("leetcode")
+print(f"leetcode -> {t3[0]}, l: {t3[1]}")
+
+t4 = Solution().sortString("ggggggg")
+print(f"ggggggg -> {t4[0]}, l: {t4[1]}")
+
+t5 = Solution().sortString("spo")
+print(f"spo -> {t5[0]}, l: {t5[1]}")
