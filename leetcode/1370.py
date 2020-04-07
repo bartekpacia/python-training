@@ -20,18 +20,19 @@ class Solution:
     def sortString(self, s: str) -> str:
         result = ""
 
-        while self.iters <= len(s):
+        while self.iters < len(s):
             smallest = "ź"
             for char in s:
-                if self.iters <= len(s):
+                if self.iters < len(s):
                     if ord(char) < ord(smallest):
                         smallest = char
 
-            result += smallest
-            self.iters += 1
+            if smallest != "ź":
+                result += smallest
+                self.iters += 1
 
             for char in s:
-                if self.iters <= len(s):
+                if self.iters < len(s):
                     smallest = self.pick_smallest_greater_than(
                         ord(smallest), s)
                     if not smallest:
@@ -41,7 +42,7 @@ class Solution:
 
             largest = "/"
             for char in s:
-                if self.iters <= len(s):
+                if self.iters < len(s):
                     if ord(char) > ord(largest):
                         largest = char
 
@@ -50,7 +51,7 @@ class Solution:
                 self.iters += 1
 
             for char in s:
-                if self.iters <= len(s):
+                if self.iters < len(s):
                     largest = self.pick_largest_smaller_than(ord(largest), s)
                     if not largest:
                         break
@@ -63,4 +64,4 @@ class Solution:
 
 
 solution = Solution()
-print(solution.sortString("rat"))
+print(solution.sortString("aaaabbbbcccc"))
