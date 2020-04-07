@@ -1,4 +1,4 @@
-a = 2
+a = "aaaabbbbcccc"
+b = "abccba"
 
-if type(a) is int:
-    print(a)
+print(a - b)

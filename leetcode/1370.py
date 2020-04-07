@@ -1,4 +1,5 @@
 class Solution:
+    iters = 0
 
     def pick_largest_smaller_than(self, largest_num: int, s: str):
         largest = "/"
@@ -19,34 +20,47 @@ class Solution:
     def sortString(self, s: str) -> str:
         result = ""
 
-        smallest = "ź"
-        for char in s:
-            if ord(char) < ord(smallest):
-                smallest = char
+        while self.iters <= len(s):
+            smallest = "ź"
+            for char in s:
+                if self.iters <= len(s):
+                    if ord(char) < ord(smallest):
+                        smallest = char
 
-        result += smallest
-
-        for char in s:
-            smallest = self.pick_smallest_greater_than(ord(smallest), s)
-            if not smallest:
-                break
             result += smallest
+            self.iters += 1
 
-        largest = "/"
-        for char in s:
-            if ord(char) > ord(largest):
-                largest = char
+            for char in s:
+                if self.iters <= len(s):
+                    smallest = self.pick_smallest_greater_than(
+                        ord(smallest), s)
+                    if not smallest:
+                        break
+                    result += smallest
+                    self.iters += 1
 
-        result += largest
+            largest = "/"
+            for char in s:
+                if self.iters <= len(s):
+                    if ord(char) > ord(largest):
+                        largest = char
 
-        for char in s:
-            largest = self.pick_largest_smaller_than(ord(largest), s)
-            if not largest:
-                break
-            result += largest
+            if largest != "/":
+                result += largest
+                self.iters += 1
 
+            for char in s:
+                if self.iters <= len(s):
+                    largest = self.pick_largest_smaller_than(ord(largest), s)
+                    if not largest:
+                        break
+                    result += largest
+                    self.iters += 1
+
+        print(
+            f"len(s): {len(s)}, len(result): {len(result)}, iters: {self.iters}")
         return result
 
 
 solution = Solution()
-print(solution.sortString("aaaabbbbcccc"))
+print(solution.sortString("rat"))
