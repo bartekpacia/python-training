@@ -20,47 +20,49 @@ class Solution:
     def sortString(self, s: str) -> str:
         result = ""
 
+        last_picked = "ź"
         while self.iters < len(s):
-            smallest = "ź"
             for char in s:
                 if self.iters < len(s):
-                    if ord(char) < ord(smallest):
-                        smallest = char
+                    if ord(char) < ord(last_picked):
+                        last_picked = char
 
-            if smallest != "ź":
-                result += smallest
-                self.iters += 1
-                print(f"appending {smallest}")
+            result += last_picked
+            self.iters += 1
+            # print(f"appending {last_picked}")
 
             for char in s:
                 if self.iters < len(s):
-                    smallest = self.pick_smallest_greater_than(
-                        ord(smallest), s)
-                    if not smallest:
+                    candidate = self.pick_smallest_greater_than(
+                        ord(last_picked), s)
+                    if not candidate:
                         break
-                    result += smallest
+
+                    last_picked = candidate
+                    result += last_picked
                     self.iters += 1
-                    print(f"appending {smallest}")
-
-            largest = "/"
-            for char in s:
-                if self.iters < len(s):
-                    if ord(char) > ord(largest):
-                        largest = char
-
-            if largest != "/":
-                result += largest
-                self.iters += 1
-                print(f"appending {largest}")
+                    # print(f"appending {last_picked}")
 
             for char in s:
                 if self.iters < len(s):
-                    largest = self.pick_largest_smaller_than(ord(largest), s)
-                    if not largest:
+                    if ord(char) > ord(last_picked):
+                        last_picked = char
+
+            result += last_picked
+            self.iters += 1
+            # print(f"appending {last_picked}")
+
+            for char in s:
+                if self.iters < len(s):
+                    candidate = self.pick_largest_smaller_than(
+                        ord(last_picked), s)
+                    if not candidate:
                         break
-                    result += largest
+
+                    last_picked = candidate
+                    result += last_picked
                     self.iters += 1
-                    print(f"appending {largest}")
+                    # print(f"appending {last_picked}")
 
         return result, self.iters
 
