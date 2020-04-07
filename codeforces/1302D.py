@@ -45,11 +45,21 @@ for i in range(m):
 
     if graph.get(a) is None:
         graph[a] = {}
-    graph[a][b] = w
+
+    if graph.get(a).get(b) is not None:
+        if graph[a][b] > w:
+            graph[a][b] = w
+    elif graph.get(a).get(b) is None:
+        graph[a][b] = w
 
     if graph.get(b) is None:
         graph[b] = {}
-    graph[b][a] = w
+
+    if graph.get(b).get(a) is not None:
+        if graph[b][a] > w:
+            graph[b][a] = w
+    elif graph.get(b).get(a) is None:
+        graph[b][a] = w
 
 
 distance = shortest_path(1, n)
