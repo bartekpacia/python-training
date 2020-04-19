@@ -3,14 +3,9 @@ T = int(input())
 results = []
 
 
-def generate_mults_mult_lower_than(x, D):
-    mults = []
-    m = 0
-    while m <= D:
-        mults.append(m)
-        m += x
-
-    return mults
+def biggest_multiple(multiple_of, biggest):
+    rest = biggest % multiple_of
+    return biggest - rest
 
 
 for t in range(1, T + 1):
@@ -20,25 +15,40 @@ for t in range(1, T + 1):
     line2 = input().split()
     xes = [int(x) for x in line2]
 
-    mults = []
-    for index, x in enumerate(xes):
-        mults_of_x = generate_mults_mult_lower_than(x, D)
+    biggest = float("inf")
+    for i in range(0, len(xes)):
+        if i == 0:
+            biggest = biggest_multiple(xes[i], D)
+            print(f"i={i}, set initial biggest to {biggest}")
+        if i != 0:
+            biggest_candidate = biggest_multiple(xes[i], D)
+            times = 0
+            while biggest_candidate > biggest:
+                print(
+                    f"i={i}, biggest candidate {biggest_candidate} > {biggest}, calculating new..."
+                )
+                times += 1
+                biggest_candidate -= xes[i]
+                print(f"i={i}new biggest candidate is {biggest_candidate}")
+            biggest = biggest_candidate
+            print(f"i={i}, set biggest to {biggest}")
 
-        mults.append(mults_of_x)
+    print(biggest)
 
-    latests = []
-    for index, mults_of_x in reversed(list(enumerate(mults))):
-        i = -1
-        latest = mults_of_x[i]
+    # latests = []
+    # for index, mults_of_x in reversed(list(enumerate(mults))):
+    #     i = -1
+    #     latest = mults_of_x[i]
 
-        while latests and latest > latests[-1]:
-            i -= 1
-            latest = mults_of_x[i]
+    #     while latests and latest > latests[-1]:
+    #         i -= 1
+    #         latest = mults_of_x[i]
 
-        latests.append(latest)
+    #     latests.append(latest)
 
-    ans = latests[-1]
-    results.append("Case #" + str(t) + ": " + str(ans))
+    # ans = latests[-1]
+    # results.append("Case #" + str(t) + ": " + str(ans))
 
 for res in results:
-    print(res)
+    # print(res)
+    pass
