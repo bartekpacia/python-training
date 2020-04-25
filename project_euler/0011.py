@@ -33,9 +33,49 @@ def read_file():
     return matrix
 
 
-matrix = read_file()
+# matrix
+mx = read_file()
 
-for y, array in enumerate(matrix):
-    for x, num in enumerate(array):
-        print(f"({y}, {x}) = {num}")
+biggest_result = 0
+for y in range(20):
+    for x in range(20):
+        print(f"({y}, {x}) = {mx[y][x]}")
 
+        # look down
+        try:
+            result1 = mx[y][x] * mx[y + 1][x] * mx[y + 2][x] * mx[y + 3][x]
+        except IndexError:
+            continue
+
+        # look right
+        try:
+            result2 = mx[y][x] * mx[y][x + 1] * mx[y][x + 2] * mx[y][x + 3]
+        except IndexError:
+            continue
+
+        # look diagonally (SE)
+        try:
+            res3 = mx[y][x] * mx[y + 1][x + 1] * mx[y + 2][x + 2] * mx[y + 3][x + 3]
+        except IndexError:
+            continue
+
+        # look diagonally (SW)
+        try:
+            res4 = mx[y][x] * mx[y + 1][x - 1] * mx[y + 2][x - 2] * mx[y + 3][x - 3]
+        except IndexError:
+            continue
+
+        if result1 > biggest_result:
+            biggest_result = result1
+
+        if result2 > biggest_result:
+            biggest_result = result2
+
+        if res3 > biggest_result:
+            biggest_result = res3
+
+        if res4 > biggest_result:
+            biggest_result = res4
+
+
+print(biggest_result)
