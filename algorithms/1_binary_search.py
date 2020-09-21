@@ -34,6 +34,7 @@ if __name__ == "__main__":
             numbers.append(int(number))
 
     numbers.sort()
+    print(f"Numbers after sorting: {numbers}")
 
     looking_for = int(input("What number are you looking for? "))
 
